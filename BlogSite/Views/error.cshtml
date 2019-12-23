@@ -1,0 +1,12 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Umbraco.Web.PublishedModels.Error>
+@using BlogSite.Core.Extensions;
+@{
+    Layout = "master.cshtml";
+}
+
+@Html.Partial("header")
+
+<article>
+    @Html.GetGridHtml(Model, framework: "mainContent", propertyAlias: "Clean", fluidImages: true)
+
+</article>

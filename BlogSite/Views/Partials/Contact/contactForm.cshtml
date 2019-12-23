@@ -1,0 +1,65 @@
+﻿@inherits UmbracoViewPage<ContactViewModel>
+
+@using BlogSite.Core.ViewModels
+@using BlogSite.Core.Controllers
+@using ClientDependency.Core.Mvc
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js");
+    Html.RequiresJs("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js");
+    Html.RequiresJs("/scripts/jquery.validate.min.js");
+    Html.RequiresJs("/scripts/jquery.validate.unobtrusive.min.js");
+    Html.RequiresJs("/scripts/jquery.unobtrusive-ajax.min.js");
+    Html.RequiresJs("/scripts/contactForm.js");
+}
+
+<div id="form-outer">
+    @using (Ajax.BeginForm("SubmitForm", "ContactSurfaceController", new AjaxOptions()
+    {
+        UpdateTargetId = "form-result",
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        OnSuccess = "contactForm.showResult",
+        OnFailure = "contactForm.showResult"
+    }, new { id = "contact-form" }))
+    {
+        @Html.HiddenFor(expression: m => m.ContactFormId)
+
+        <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+                <label>Name</label>
+                @Html.TextBoxFor(expression: m => m.Name, htmlAttributes: new { @class = "form-control", placeholder = "Name...", required = "required" })
+                @Html.ValidationMessageFor(expression: m => m.Name)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+                <label>Email Address</label>
+                @Html.TextBoxFor(expression: m => m.Email, htmlAttributes: new { @class = "form-control", placeholder = "Email..." })
+                @Html.ValidationMessageFor(expression: m => m.Email)
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+                <label>Date</label>
+                @Html.TextBoxFor(m => m.DateTime, new { @class = "form-control", id = "datePicker", @Value = @DateTime.Today.ToString("yyyy-MM-dd"), type = "date" })
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Message</label>
+                @Html.TextAreaFor(expression: m => m.Message, htmlAttributes: new { @class = "form-control", placeholder = "Message...", rows = 6 })
+                @Html.ValidationMessageFor(expression: m => m.Message)
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary contact-submit" id="sendMessageButton">Send</button>
+        </div>
+
+    }
+</div>
+<div id="form-result"></div>
+

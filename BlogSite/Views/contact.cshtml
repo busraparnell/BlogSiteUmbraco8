@@ -1,0 +1,21 @@
+﻿
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+
+@using ClientDependency.Core.Mvc
+
+@{
+    Layout = "master.cshtml";
+
+}
+
+@Html.Partial("~/Views/Partials/header.cshtml")
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @{ Html.RenderAction("RenderForm", controllerName: "ContactSurface"); }
+        </div>
+    </div>
+</div>
+
+

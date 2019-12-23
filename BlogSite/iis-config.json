@@ -1,0 +1,6 @@
+{
+  "IIS-Site-Name": "blog-site",
+  "App-Pool-Name": "blog-site",
+  "IIS-App-Pool-Dot-Net-Version": "v4.0",
+  "bindings": ["blog-site.localtest.me"]
+}
